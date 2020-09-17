@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="/js/bootstrap/jquery-3.2.1.slim.min.js"></script>
+    <script src="/js/bootstrap/popper.min.js"></script>
+    <script src="/js/bootstrap/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+    <script src="/js/main.js"></script>
+    <title><%=servername%></title>
+</head>
+
+<body>
+<h1>파일 공유</h1>
+<%-include('./layout/info')%>
+
+<h4>제한 : 1GB</h4>
+<form action="/upload" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="InputFile">파일 선택</label>
+        <input type="file" id="InputFile" name="file" class="form-control-file">
+    </div>
+    <button type="submit" class="btn btn-primary">업로드</button>
+</form>
+</body>
+</html>
