@@ -38,7 +38,7 @@ app.post('/upload', upload.single('file'), async (req, res, next) => {
 
     const filename = `${uniqueString()}${path.extname(req.file.originalname)}`;
     const limit = new Date();
-    limit.setDate(limit.getDate() + 1);
+    limit.setDate(limit.getDate() + 7);
     const secretkey = `${uniqueString()}${uniqueString()}`;
 
     streamifier.createReadStream(req.file.buffer).pipe(fs.createWriteStream(path.join(setting.SAVE_FILE_PATH, filename)));
