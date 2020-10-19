@@ -113,7 +113,6 @@ setImmediate(async () => {
         limit: { $lte : new Date().getTime() }
     });
     file.forEach(f => {
-        console.log(f);
         fs.unlinkSync(path.join(setting.SAVE_FILE_PATH, f.filename));
     });
     await File.deleteMany({
@@ -125,7 +124,6 @@ setInterval(async () => {
         limit: { $lte : new Date().getTime() }
     });
     file.forEach(f => {
-        console.log(f);
         fs.unlinkSync(path.join(setting.SAVE_FILE_PATH, f.filename));
     });
     await File.deleteMany({
