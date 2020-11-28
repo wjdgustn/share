@@ -69,4 +69,25 @@ app.get('/download', async (req, res, next) => {
     return res.download(path.join(setting.SAVE_FILE_PATH, file.filename), file.originalname);
 });
 
+app.post('/api/upload', upload.single('file'), async (req, res, next) => {
+    if(!setting.BYPASS_LIMIT.includes(res.locals.ip) && req.file.size > 1024 * 1024 * 1024)
+        return res.send('파일이 1GB를 초과합니다.');
+
+    const filename = `${uniqueString()}${path.extname(req.file.originalname)}`;
+    const limit = new Date();
+    limit.setDate(limit.getDate() + 7);
+    const secretkey = `${uniqueString()}${uniqueString()}`;
+
+    streamifier.createReadStream(req.file.buffer).pipe(fs.createWriteStream(path.join(setting.SAVE_FILE_PATH, filename)));
+
+    await File.create({
+        filename,
+        secretkey,
+        limit: limit.getTime(),
+        originalname: req.file.originalname
+    });
+
+    return res.send(`${req.protocol}://${req.hostname}/download?filename=${filename}&secret=${secretkey}`);
+});
+
 module.exports = app;
